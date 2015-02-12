@@ -13,3 +13,11 @@ hs_err_pid*
 
 # Backup files
 *~
+
+# Intellij and gradle config files
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build

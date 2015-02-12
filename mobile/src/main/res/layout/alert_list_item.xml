@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/transparent"
+              android:orientation="vertical">
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:id="@+id/alert_item_server"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Default Server..."
+      android:textColor="@android:color/white"
+      android:textSize="24dp"
+      android:textStyle="bold"/>
+
+    <TextView
+      android:id="@+id/alert_item_continent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/alert_item_server"
+      android:text="Default Continent..."
+      android:textColor="@android:color/white"
+      android:textSize="18dp"
+      android:textStyle="bold"/>
+
+    <TextView
+      android:id="@+id/alert_time_remaining"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:layout_marginRight="32dp"
+      android:text="2:00:00"
+      android:textColor="@android:color/holo_red_light"
+      android:textSize="28sp"/>
+
+  </RelativeLayout>
+
+  <RelativeLayout
+    android:id="@+id/alert_faction_control"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <TextView
+      android:id="@+id/alert_faction_control_header"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Faction Control"
+      android:textColor="@android:color/white"
+      android:textSize="18dp"
+      android:textStyle="bold"/>
+
+    <LinearLayout
+      android:id="@+id/alert_faction_control_data"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/alert_faction_control_header"
+      android:orientation="horizontal">
+
+    </LinearLayout>
+
+  </RelativeLayout>
+
+  <RelativeLayout
+    android:id="@+id/alert_faction_population"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <TextView
+      android:id="@+id/alert_faction_population_header"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Faction Population"
+      android:textColor="@android:color/white"
+      android:textSize="18dp"
+      android:textStyle="bold"/>
+
+    <LinearLayout
+      android:id="@+id/alert_faction_population_data"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/alert_faction_population_header"
+      android:orientation="horizontal">
+
+    </LinearLayout>
+
+  </RelativeLayout>
+
+</LinearLayout>

@@ -9,3 +9,11 @@ alert in received a notification is sent and if the main activity is opened
 you can view a list of alerts along with information about the server
 population and current continent control (updated every 10 minutes while the
 alert is active).
+
+Right now, this is only a mobile app. But I would like to eventually add a
+wearable microapp.
+
+Building this should be as simple as cloning the repository and importing
+the project into Android Studio. If you want to run the Robolectric tests
+you will need to install the Robolectric plugins for android studio (you
+can find them on github).
