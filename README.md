@@ -15,5 +15,5 @@ wearable microapp.
 
 Building this should be as simple as cloning the repository and importing
 the project into Android Studio. If you want to run the Robolectric tests
-you will need to install the Robolectric plugins for android studio (you
-can find them on github).
+you will need to install the Robolectric plugin for android studio (you
+can find it at: https://github.com/JCAndKSolutions/android-unit-test)
