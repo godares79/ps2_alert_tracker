@@ -3,7 +3,7 @@
 
     <string name="app_name">PS2 Alert Notifier</string>
     <string name="action_settings">Server Settings</string>
-    <string name="no_active_alerts">No Active Alerts :(</string>
+    <string name="no_active_alerts">No Active Alerts</string>
     <string name="default_server">Default Server...</string>
     <string name="default_continent">Default Continent...</string>
     <string name="default_alert_time">2:00:00</string>
