@@ -12,8 +12,3 @@ alert is active).
 
 Right now, this is only a mobile app. But I would like to eventually add a
 wearable microapp.
-
-Building this should be as simple as cloning the repository and importing
-the project into Android Studio. If you want to run the Robolectric tests
-you will need to install the Robolectric plugin for android studio (you
-can find it at: https://github.com/JCAndKSolutions/android-unit-test)

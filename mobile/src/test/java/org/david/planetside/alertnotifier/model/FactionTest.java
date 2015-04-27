@@ -5,8 +5,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class FactionTest {
 
   @Test
   public void testParse_userSelectableFaction() throws IOException, JSONException {
-    Faction faction = Faction.parse(getFactionObjectData(0), Robolectric.application);
+    Faction faction = Faction.parse(getFactionObjectData(0), RuntimeEnvironment.application);
     assertNotNull(faction);
     assertNotNull(faction.getIcon());
     assertNotNull(faction.getName());
@@ -45,7 +45,7 @@ public class FactionTest {
 
   @Test
   public void testParse_notUserSelectableFaction() throws IOException, JSONException {
-    Faction faction = Faction.parse(getFactionObjectData(1), Robolectric.application);
+    Faction faction = Faction.parse(getFactionObjectData(1), RuntimeEnvironment.application);
     assertNull(faction);
   }
 

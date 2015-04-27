@@ -7,8 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class ServerListTest {
 
   @Test
   public void getSavedServerList_noSavedServers() {
-    SharedPreferences sharedPreferences = Robolectric.application.getSharedPreferences("UNUSED", 0);
+    SharedPreferences sharedPreferences = RuntimeEnvironment.application.getSharedPreferences("UNUSED", 0);
 
     ServerList serverList = ServerList.getSavedServerList(sharedPreferences);
     assertEquals(0, serverList.size());
@@ -45,7 +45,7 @@ public class ServerListTest {
 
   @Test
   public void getSavedServerList_hasSavedServers() throws JSONException {
-    SharedPreferences sharedPreferences = Robolectric.application.getSharedPreferences("UNUSED", 0);
+    SharedPreferences sharedPreferences = RuntimeEnvironment.application.getSharedPreferences("UNUSED", 0);
     ServerList serverList = new ServerList();
     Server one = new Server(1, "ONE");
     serverList.add(one);
@@ -78,7 +78,7 @@ public class ServerListTest {
   @Test
   public void testSaveServerList_noServersToSave() throws JSONException {
     ServerList serverList = new ServerList();
-    SharedPreferences sharedPreferences = Robolectric.application.getSharedPreferences("UNUSED", 0);
+    SharedPreferences sharedPreferences = RuntimeEnvironment.application.getSharedPreferences("UNUSED", 0);
     serverList.saveServerList(sharedPreferences);
     assertEquals(0, ServerList.getSavedServerList(sharedPreferences).size());
   }

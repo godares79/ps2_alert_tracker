@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import javax.websocket.EndpointConfig;
@@ -22,7 +22,7 @@ public class EventReceiverTest {
 
   @Before
   public void setUp() {
-    eventReceiver = new EventReceiver((AlertNotifierApplication) Robolectric.application, null);
+    eventReceiver = new EventReceiver((AlertNotifierApplication) RuntimeEnvironment.application, null);
   }
 
   @Ignore("Does not work. See comments in test method for explanation.")
