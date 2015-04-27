@@ -5,8 +5,8 @@ import android.content.Intent;
 import org.david.planetside.alertnotifier.connection.WebsocketClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class OnBootBroadcastReceiverTest {
   @Test
   public void testReceiverRegistered() {
-    List<ShadowApplication.Wrapper> registeredReceivers = Robolectric.getShadowApplication().getRegisteredReceivers();
+    List<ShadowApplication.Wrapper> registeredReceivers = ShadowApplication.getInstance().getRegisteredReceivers();
     assertFalse(registeredReceivers.isEmpty());
 
     boolean foundReceiver = false;
@@ -45,21 +45,21 @@ public class OnBootBroadcastReceiverTest {
   @Test
   public void testRegisteredForBootCompletedAction() {
     Intent intent = new Intent(Intent.ACTION_BOOT_COMPLETED);
-    assertTrue(Robolectric.getShadowApplication().hasReceiverForIntent(intent));
+    assertTrue(ShadowApplication.getInstance().hasReceiverForIntent(intent));
   }
 
   @Test
   public void testOnlyOneReceiverRegistered() {
     Intent intent = new Intent(Intent.ACTION_BOOT_COMPLETED);
-    assertEquals(1, Robolectric.getShadowApplication().getReceiversForIntent(intent).size());
+    assertEquals(1, ShadowApplication.getInstance().getReceiversForIntent(intent).size());
   }
 
   @Test
   public void testSendOnBootBroadcast() {
     Intent intent = new Intent(Intent.ACTION_BOOT_COMPLETED);
-    Robolectric.application.sendBroadcast(intent);
+    RuntimeEnvironment.application.sendBroadcast(intent);
     assertEquals(
         WebsocketClient.class.getCanonicalName(),
-        Robolectric.getShadowApplication().getNextStartedService().getComponent().getClassName());
+        ShadowApplication.getInstance().getNextStartedService().getComponent().getClassName());
   }
 }

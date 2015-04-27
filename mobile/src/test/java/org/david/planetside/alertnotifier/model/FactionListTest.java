@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class FactionListTest {
 
   @Before
   public void setUp() throws IOException, JSONException {
-    factionList = FactionList.parse(getFactionListData(), Robolectric.application);
+    factionList = FactionList.parse(getFactionListData(), RuntimeEnvironment.application);
   }
 
   @Test(expected = IllegalArgumentException.class)

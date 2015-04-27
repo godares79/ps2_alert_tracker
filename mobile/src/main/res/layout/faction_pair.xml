@@ -8,14 +8,15 @@
     android:id="@+id/icon"
     android:layout_width="24dp"
     android:layout_height="24dp"
-    android:src="@drawable/ns"/>
+    android:src="@drawable/ns"
+    android:contentDescription="@string/faction_icon_content_description"/>
 
   <TextView
     android:id="@+id/value"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:text="N/A"
+    android:text="@string/not_avaliable_faction_value"
     android:textColor="@android:color/white"/>
 
 </LinearLayout>

@@ -11,7 +11,7 @@ import java.io.IOException;
  * Shared information used in unit tests.
  */
 public class TestData {
-  public static final String DATA_LOCATION_PREFIX = "/home/david/AndroidStudioWorkspace/PS2_AlertNotifier/mobile/src/test/resources/";
+  public static final String DATA_LOCATION_PREFIX = "/home/david/Programming/ps2_alert_tracker/mobile/src/test/resources/";
 
   /**
    * Open the test resources and return a line.

@@ -10,15 +10,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text=
-      "Select one or more servers to subscribe to events on."
+      "@string/select_server_description_text"
     android:textColor="@android:color/white"/>
 
   <ProgressBar
     android:id="@+id/select_server_progress_bar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
     android:layout_gravity="center"
     android:visibility="gone"/>
 
@@ -32,7 +30,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:text="Done"
+    android:text="@string/select_server_done_button"
     android:textColor="@android:color/white"
     android:visibility="gone"/>
 

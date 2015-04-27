@@ -16,7 +16,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.internal.ShadowExtractor;
 import org.robolectric.shadows.ShadowLocalBroadcastManager;
 
 import java.util.List;
@@ -52,14 +54,14 @@ public class SelectServerActivityTest {
     allServers.add(server2);
     allServers.add(server3);
     allServers.add(server4);
-    ((AlertNotifierApplication) Robolectric.application).setServerListForTest(allServers);
+    ((AlertNotifierApplication) RuntimeEnvironment.application).setServerListForTest(allServers);
 
     // 2 servers are being tracked already
     trackedServers = new ServerList();
     trackedServers.add(server1);
     trackedServers.add(server2);
     trackedServers.saveServerList(
-        Robolectric.application.getSharedPreferences(
+        RuntimeEnvironment.application.getSharedPreferences(
             MainActivity.SHARED_PREFS_FILE, 0 /* private */));
 
     selectServerActivity = Robolectric.buildActivity(SelectServerActivity.class).setup().get();
@@ -102,7 +104,7 @@ public class SelectServerActivityTest {
 
     // Confirm that three servers are now being tracked: server1, server2, and server3
     ServerList newlyTrackedServers = ServerList.getSavedServerList(
-        Robolectric.application.getSharedPreferences(
+        RuntimeEnvironment.application.getSharedPreferences(
             MainActivity.SHARED_PREFS_FILE, 0 /* private */));
     assertEquals(3, newlyTrackedServers.size());
     assertTrue(newlyTrackedServers.contains(server1));
@@ -111,7 +113,7 @@ public class SelectServerActivityTest {
 
     // Confirm that an local intent was sent for updating the server subscriptions
     ShadowLocalBroadcastManager shadowLocalBroadcastManager =
-        Robolectric.shadowOf(LocalBroadcastManager.getInstance(Robolectric.application));
+        (ShadowLocalBroadcastManager) ShadowExtractor.extract(LocalBroadcastManager.getInstance(RuntimeEnvironment.application));
     List<Intent> sentIntents = shadowLocalBroadcastManager.getSentBroadcastIntents();
     assertEquals(1, sentIntents.size());
     assertEquals("ALERT_SUBSCRIPTION_UPDATED", sentIntents.get(0).getAction());
@@ -138,14 +140,14 @@ public class SelectServerActivityTest {
 
     // Confirm that three servers are now being tracked: server1, server2, and server3
     ServerList newlyTrackedServers = ServerList.getSavedServerList(
-        Robolectric.application.getSharedPreferences(
+        RuntimeEnvironment.application.getSharedPreferences(
             MainActivity.SHARED_PREFS_FILE, 0 /* private */));
     assertEquals(1, newlyTrackedServers.size());
     assertTrue(newlyTrackedServers.contains(server1));
 
     // Confirm that an local intent was sent for updating the server subscriptions
     ShadowLocalBroadcastManager shadowLocalBroadcastManager =
-        Robolectric.shadowOf(LocalBroadcastManager.getInstance(Robolectric.application));
+        (ShadowLocalBroadcastManager) ShadowExtractor.extract(LocalBroadcastManager.getInstance(RuntimeEnvironment.application));
     List<Intent> sentIntents = shadowLocalBroadcastManager.getSentBroadcastIntents();
     assertEquals(1, sentIntents.size());
     assertEquals("ALERT_SUBSCRIPTION_UPDATED", sentIntents.get(0).getAction());

@@ -14,9 +14,9 @@
       android:id="@+id/alert_item_server"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Default Server..."
+      android:text="@string/default_server"
       android:textColor="@android:color/white"
-      android:textSize="24dp"
+      android:textSize="24sp"
       android:textStyle="bold"/>
 
     <TextView
@@ -24,9 +24,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@id/alert_item_server"
-      android:text="Default Continent..."
+      android:text="@string/default_continent"
       android:textColor="@android:color/white"
-      android:textSize="18dp"
+      android:textSize="18sp"
       android:textStyle="bold"/>
 
     <TextView
@@ -36,7 +36,7 @@
       android:layout_alignParentRight="true"
       android:layout_centerVertical="true"
       android:layout_marginRight="32dp"
-      android:text="2:00:00"
+      android:text="@string/default_alert_time"
       android:textColor="@android:color/holo_red_light"
       android:textSize="28sp"/>
 
@@ -52,9 +52,9 @@
       android:id="@+id/alert_faction_control_header"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Faction Control"
+      android:text="@string/faction_control_header"
       android:textColor="@android:color/white"
-      android:textSize="18dp"
+      android:textSize="18sp"
       android:textStyle="bold"/>
 
     <LinearLayout
@@ -78,9 +78,9 @@
       android:id="@+id/alert_faction_population_header"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Faction Population"
+      android:text="@string/faction_population_header"
       android:textColor="@android:color/white"
-      android:textSize="18dp"
+      android:textSize="18sp"
       android:textStyle="bold"/>
 
     <LinearLayout

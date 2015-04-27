@@ -3,5 +3,15 @@
 
     <string name="app_name">PS2 Alert Notifier</string>
     <string name="action_settings">Server Settings</string>
+    <string name="no_active_alerts">No Active Alerts :(</string>
+    <string name="default_server">Default Server...</string>
+    <string name="default_continent">Default Continent...</string>
+    <string name="default_alert_time">2:00:00</string>
+    <string name="faction_control_header">Faction Control</string>
+    <string name="faction_population_header">Faction Population</string>
+    <string name="faction_icon_content_description">Faction icon image.</string>
+    <string name="not_avaliable_faction_value">N/A</string>
+    <string name="select_server_description_text">Select one or more servers to subscribe to events on.</string>
+    <string name="select_server_done_button">Done</string>
 
 </resources>
