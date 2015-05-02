@@ -104,6 +104,15 @@ public class ServerAlert {
     }
   }
 
+  public static long getMsUntilAlertFinished(Date endTime) {
+    return endTime.getTime() - System.currentTimeMillis();
+  }
+
+  public static Date getFinishTime(Date startTime) {
+    long startMs = startTime.getTime();
+    return new Date(startMs + ALERT_LENGTH_MS);
+  }
+
   @Override
   public String toString() {
     String alertString = "";

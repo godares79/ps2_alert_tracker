@@ -108,8 +108,8 @@ public class ServerAlertListAdapter extends BaseAdapter {
     }
 
     // Start the countdown timer
-    Date endTime = getFinishTime(serverAlert.getAlertStartTime());
-    long msUntilFinished = getMsUntilAlertFinished(endTime);
+    Date endTime = ServerAlert.getFinishTime(serverAlert.getAlertStartTime());
+    long msUntilFinished = ServerAlert.getMsUntilAlertFinished(endTime);
     final TextView countdownView = (TextView) rowView.findViewById(R.id.alert_time_remaining);
 
     if (rowView.getTag() != null) {
@@ -157,14 +157,5 @@ public class ServerAlertListAdapter extends BaseAdapter {
     rowView.setTag(countDownTimer);
 
     return rowView;
-  }
-
-  private long getMsUntilAlertFinished(Date endTime) {
-    return endTime.getTime() - System.currentTimeMillis();
-  }
-
-  private Date getFinishTime(Date startTime) {
-    long startMs = startTime.getTime();
-    return new Date(startMs + ServerAlert.ALERT_LENGTH_MS);
   }
 }

@@ -6,10 +6,12 @@ import org.david.planetside.alertnotifier.connection.RESTClient;
 import org.david.planetside.alertnotifier.model.ContinentList;
 import org.david.planetside.alertnotifier.model.FactionList;
 import org.david.planetside.alertnotifier.model.ServerAlert;
+import org.david.planetside.alertnotifier.model.ServerAlertComparator;
 import org.david.planetside.alertnotifier.model.ServerList;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,6 +92,7 @@ public class AlertNotifierApplication extends Application {
   public void addServerAlert(ServerAlert serverAlert) {
     if (!serverAlerts.contains(serverAlert)) {
       serverAlerts.add(serverAlert);
+      Collections.sort(serverAlerts, new ServerAlertComparator());
     }
   }
 }
