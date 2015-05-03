@@ -232,7 +232,8 @@ public class WebsocketClient extends Service {
 
         // Send an alert notification
         NotificationCreator notificationCreator = new NotificationCreator();
-        notificationCreator.createNotification(getApplicationContext(),
+        notificationCreator.createNotification(
+            getApplicationContext(), serverAlert.getServer().getServerId(),
             serverAlert.getServer().getServerName(), serverAlert.getContinent().getName());
       }
     }

@@ -14,10 +14,9 @@ import org.david.planetside.alertnotifier.ui.MainActivity;
  * Utility class for posting notifications to android.
  */
 public class NotificationCreator {
-  // Just a random int. Only one notification is going to show at a time.
-  private static final int NOTIFICATION_ID = 55467;
 
-  public void createNotification(Context context, String serverName, String continentName) {
+  public void createNotification(
+      Context context, int serverId, String serverName, String continentName) {
     // TODO: Use a RemoteView and display more information (like a timer) in the alert.
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
         .setSmallIcon(R.drawable.alert_icon)
@@ -39,6 +38,12 @@ public class NotificationCreator {
 
     NotificationManager notificationManager =
         (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-    notificationManager.notify(NOTIFICATION_ID, builder.build());
+    notificationManager.notify(serverId, builder.build());
+  }
+
+  public void cancelNotification(Context context, int serverId) {
+    NotificationManager notificationManager =
+        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    notificationManager.cancel(serverId);
   }
 }

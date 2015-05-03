@@ -63,9 +63,12 @@ public class EventReceiver extends Endpoint {
         // Send an alert notification
         NotificationCreator notificationCreator = new NotificationCreator();
         notificationCreator.createNotification(
-            context, serverAlert.getServer().getServerName(), serverAlert.getContinent().getName());
+            context, serverAlert.getServer().getServerId(),
+            serverAlert.getServer().getServerName(), serverAlert.getContinent().getName());
       } else {
         // Remove the server alert.
+        NotificationCreator notificationCreator = new NotificationCreator();
+        notificationCreator.cancelNotification(context, serverAlert.getServer().getServerId());
         if (!application.getServerAlerts().contains(serverAlert)) {
           // If the alert is not in the list then don't bother removing and sending an alert
           // updated intent.
