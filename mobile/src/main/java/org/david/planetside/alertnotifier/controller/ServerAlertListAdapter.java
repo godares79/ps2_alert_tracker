@@ -147,7 +147,9 @@ public class ServerAlertListAdapter extends BaseAdapter {
 
       @Override
       public void onFinish() {
-        // Remove the alert from the active alerts list
+        // Remove the alert from the active alerts list.
+        NotificationCreator notificationCreator = new NotificationCreator();
+        notificationCreator.cancelNotification(context, serverAlert.getServer().getServerId());
         alertList.remove(serverAlert);
       }
     };
