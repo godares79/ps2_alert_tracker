@@ -2,6 +2,7 @@ package org.david.planetside.alertnotifier.connection;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -32,6 +33,7 @@ public class EventReceiver extends Endpoint {
   private static final int RECONNECT_INTERVAL_MS = 120 * 1000;
   private final AlertNotifierApplication application;
   private final PrintWriter connectionLogWriter;
+  private final Handler uiThreadHandler;
   private MessageHandler.Whole<String> messageHandler = new MessageHandler.Whole<String>() {
     @Override
     public void onMessage(String message) {
@@ -62,9 +64,7 @@ public class EventReceiver extends Endpoint {
 
         // Send an alert notification
         NotificationCreator notificationCreator = new NotificationCreator();
-        notificationCreator.createNotification(
-            context, serverAlert.getServer().getServerId(),
-            serverAlert.getServer().getServerName(), serverAlert.getContinent().getName());
+        notificationCreator.createNotification(context, serverAlert, uiThreadHandler);
       } else {
         // Remove the server alert.
         NotificationCreator notificationCreator = new NotificationCreator();
@@ -83,7 +83,9 @@ public class EventReceiver extends Endpoint {
     }
   };
 
-  public EventReceiver(AlertNotifierApplication application, PrintWriter connectionLogWriter) {
+  public EventReceiver(AlertNotifierApplication application,
+                       PrintWriter connectionLogWriter, Handler uiThreadHandler) {
+    this.uiThreadHandler = uiThreadHandler;
     this.application = application;
     this.connectionLogWriter = connectionLogWriter;
   }

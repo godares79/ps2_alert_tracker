@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class WebsocketClient extends Service {
   private Thread connectionThread;
   private Session dataSession;
   private PrintWriter connectionLogWriter;
+  private Handler uiThreadHandler;
 
   private BroadcastReceiver updateAlertSubscriptionBroadcastReceiver =
       new BroadcastReceiver() {
@@ -109,6 +111,11 @@ public class WebsocketClient extends Service {
         }
       };
 
+  public void onCreate() {
+    super.onCreate();
+    uiThreadHandler = new Handler();
+  }
+
   @Override
   public IBinder onBind(Intent intent) {
     // Not used. Using startService() to start, see onStartCommand.
@@ -167,8 +174,8 @@ public class WebsocketClient extends Service {
   public Session connect(ClientManager clientManager, URI endpointURI)
       throws IOException, DeploymentException {
     // Connect to the server and subscribe for server updates.
-    EventReceiver eventReceiverEndpoint =
-        new EventReceiver((AlertNotifierApplication) getApplication(), connectionLogWriter);
+    EventReceiver eventReceiverEndpoint = new EventReceiver(
+        (AlertNotifierApplication) getApplication(), connectionLogWriter, uiThreadHandler);
     // TODO: Doesn't work on android L, grab a newer version of MR1 to determine if handshake is fixed.
     Session sessionObject = clientManager.connectToServer(eventReceiverEndpoint, endpointURI);
 
@@ -232,9 +239,7 @@ public class WebsocketClient extends Service {
 
         // Send an alert notification
         NotificationCreator notificationCreator = new NotificationCreator();
-        notificationCreator.createNotification(
-            getApplicationContext(), serverAlert.getServer().getServerId(),
-            serverAlert.getServer().getServerName(), serverAlert.getContinent().getName());
+        notificationCreator.createNotification(getApplicationContext(), serverAlert, uiThreadHandler);
       }
     }
 
