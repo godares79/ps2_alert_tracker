@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/alert_notification_layout"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/alert_icon"
+      android:layout_gravity="center_vertical|left"/>
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_marginLeft="10dp"
+    android:layout_gravity="center_vertical|center_horizontal">
+    <TextView
+        android:id="@+id/server_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Server Name"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/continent_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continent Name"
+        android:textSize="16sp"/>
+  </LinearLayout>
+  
+  <TextView
+      android:id="@+id/alert_timer_textview"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical|right"
+      android:text="2:00:00"
+      android:textSize="36sp"
+      android:textColor="@android:color/holo_red_light"
+      android:layout_marginLeft="30dp"/>
+
+</LinearLayout>
