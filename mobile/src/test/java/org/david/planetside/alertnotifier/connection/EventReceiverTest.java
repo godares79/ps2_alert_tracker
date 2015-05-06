@@ -1,5 +1,7 @@
 package org.david.planetside.alertnotifier.connection;
 
+import android.os.Handler;
+
 import org.david.planetside.alertnotifier.AlertNotifierApplication;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -22,7 +24,9 @@ public class EventReceiverTest {
 
   @Before
   public void setUp() {
-    eventReceiver = new EventReceiver((AlertNotifierApplication) RuntimeEnvironment.application, null);
+    Handler mockUiHandler = mock(Handler.class);
+    eventReceiver = new EventReceiver(
+        (AlertNotifierApplication) RuntimeEnvironment.application, null, mockUiHandler);
   }
 
   @Ignore("Does not work. See comments in test method for explanation.")
