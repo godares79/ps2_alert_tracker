@@ -118,7 +118,7 @@ public class ServerAlert {
     String alertString = "";
     alertString += "Server: " + getServer().toString() + "\n";
     alertString += "Continent: " + getContinent().toString() + "\n";
-    alertString += "Start Time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(getAlertStartTime()) + "\n";
+    alertString += "Start Time: " + SimpleDateFormat.getDateTimeInstance().format(getAlertStartTime()) + "\n";
     alertString += "Active: " + isActive() + "\n";
     alertString += "Experience Bonus: " + getExperienceBonus() + "\n";
     alertString += "Instance ID: " + getInstanceId() + "\n";

@@ -29,7 +29,7 @@ public class Faction {
       throw new IllegalArgumentException("The context is null!");
     }
 
-    int id = new Integer(factionObject.getString("faction_id"));
+    int id = Integer.valueOf(factionObject.getString("faction_id"));
     String name = factionObject.getJSONObject("name").getString("en");
     boolean userSelectable = factionObject.getString("user_selectable").equals("1");
 

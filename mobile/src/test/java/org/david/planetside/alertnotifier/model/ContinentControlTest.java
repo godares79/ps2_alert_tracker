@@ -24,9 +24,6 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricTestRunner.class)
 public class ContinentControlTest {
 
-  private static final String TEST_DATA_LOCATION =
-      TestData.DATA_LOCATION_PREFIX + "ContinentControlTest.data";
-
   @Test(expected = IllegalArgumentException.class)
   public void testParse_nullObject() throws JSONException {
     ContinentControl.parse(null, null);

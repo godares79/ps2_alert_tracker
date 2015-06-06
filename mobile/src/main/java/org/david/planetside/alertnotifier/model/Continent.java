@@ -20,7 +20,7 @@ public class Continent {
       throw new IllegalArgumentException("The continentObject is null!");
     }
 
-    int id = new Integer(continentObject.getString("zone_id"));
+    int id = Integer.valueOf(continentObject.getString("zone_id"));
     String name = continentObject.getJSONObject("name").getString("en");
 
     return new Continent(id, name);

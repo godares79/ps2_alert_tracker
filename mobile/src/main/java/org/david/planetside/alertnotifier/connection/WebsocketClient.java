@@ -285,10 +285,10 @@ public class WebsocketClient extends Service {
     }
 
     if (message != null) {
-      connectionLogWriter.append(message + "\n");
+      connectionLogWriter.append(message).append("\n");
     }
     if (exception != null) {
-      connectionLogWriter.append(Log.getStackTraceString(exception) + "\n");
+      connectionLogWriter.append(Log.getStackTraceString(exception)).append("\n");
     }
 
     connectionLogWriter.flush();
