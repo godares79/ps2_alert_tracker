@@ -64,7 +64,7 @@ public class NotificationCreator {
             double seconds = Math.ceil((secondsUntilFinished % (60 * 60)) % 60);
 
             String timeString = "";
-            if (hours == 0) {
+            if (hours <= 1) {
               timeString = "0";
             }
             timeString += (int) hours + ":";
