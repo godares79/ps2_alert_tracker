@@ -26,7 +26,7 @@ public class EventReceiverTest {
   public void setUp() {
     Handler mockUiHandler = mock(Handler.class);
     eventReceiver = new EventReceiver(
-        (AlertNotifierApplication) RuntimeEnvironment.application, null, mockUiHandler);
+        (AlertNotifierApplication) RuntimeEnvironment.application, mockUiHandler);
   }
 
   @Ignore("Does not work. See comments in test method for explanation.")

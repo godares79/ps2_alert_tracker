@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -24,11 +23,7 @@ import org.david.planetside.alertnotifier.model.ServerPopulation;
 import org.david.planetside.alertnotifier.ui.MainActivity;
 import org.glassfish.tyrus.client.ClientManager;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URI;
 import java.util.List;
 
@@ -42,11 +37,9 @@ public class WebsocketClient extends Service {
   static final String WEBSOCKET_SERVER_ADDRESS =
       "wss://push.planetside2.com/streaming?service-id=s:ps2alertnotificationapp";
   private static final int UPDATE_ALERT_INFO_WAIT_MS = 10 * 60 * 1000;
-  private static final String PERSISTENT_LOG_NAME = "ps2_alertnotifier_connection_log.txt";
   private static final String TAG = WebsocketClient.class.getSimpleName();
   private Thread connectionThread;
   private Session dataSession;
-  private PrintWriter connectionLogWriter;
   private Handler uiThreadHandler;
 
   private BroadcastReceiver updateAlertSubscriptionBroadcastReceiver =
@@ -91,8 +84,6 @@ public class WebsocketClient extends Service {
                 serverAlert.setServerPopulation(newServerPopulation);
               } catch (IOException e) {
                 Log.e(TAG, "Problem updating alert information for alert: " + serverAlert, e);
-                writeToPersistentLog(
-                    "Problem updating alert information for alert: " + serverAlert, e);
               }
             }
 
@@ -129,16 +120,6 @@ public class WebsocketClient extends Service {
       return START_STICKY;
     }
 
-    try {
-      connectionLogWriter =
-          new PrintWriter(
-              new BufferedWriter(
-                  new FileWriter(
-                      new File(Environment.getExternalStorageDirectory(), PERSISTENT_LOG_NAME))));
-    } catch (IOException e) {
-      Log.e(TAG, "Issue opening the persistent connection log for writing.", e);
-    }
-
     connectionThread = new Thread(new Runnable() {
       @Override
       public void run() {
@@ -147,7 +128,6 @@ public class WebsocketClient extends Service {
           dataSession = connect(clientManager, URI.create(WEBSOCKET_SERVER_ADDRESS));
         } catch (DeploymentException | IOException e) {
           Log.e(TAG, "Problem connecting to server.", e);
-          writeToPersistentLog("Problem connecting to server.", e);
         }
       }
     });
@@ -175,7 +155,7 @@ public class WebsocketClient extends Service {
       throws IOException, DeploymentException {
     // Connect to the server and subscribe for server updates.
     EventReceiver eventReceiverEndpoint = new EventReceiver(
-        (AlertNotifierApplication) getApplication(), connectionLogWriter, uiThreadHandler);
+        (AlertNotifierApplication) getApplication(), uiThreadHandler);
     // TODO: Doesn't work on android L, grab a newer version of MR1 to determine if handshake is fixed.
     Session sessionObject = clientManager.connectToServer(eventReceiverEndpoint, endpointURI);
 
@@ -215,7 +195,6 @@ public class WebsocketClient extends Service {
           localBroadcastManager.sendBroadcast(new Intent("ALERT_DATA_UPDATED"));
         } catch (IOException e) {
           Log.e(TAG, "Problem getting the alerts for the newly tracked servers.", e);
-          writeToPersistentLog("Problem getting the alerts for the newly tracked servers.", e);
         }
 
         sendAlertSubscription(dataSession, savedServers);
@@ -271,26 +250,9 @@ public class WebsocketClient extends Service {
 
     // Send metagame subscription message
     try {
-      writeToPersistentLog("Sending alert subscription message for: " + requestString, null);
       session.getBasicRemote().sendText(requestString);
     } catch (IOException e) {
       Log.e(TAG, "Error sending alert subscription.", e);
-      writeToPersistentLog("Error sending alert subscription.", e);
     }
-  }
-
-  private void writeToPersistentLog(String message, Exception exception) {
-    if (connectionLogWriter == null) {
-      return;
-    }
-
-    if (message != null) {
-      connectionLogWriter.append(message).append("\n");
-    }
-    if (exception != null) {
-      connectionLogWriter.append(Log.getStackTraceString(exception)).append("\n");
-    }
-
-    connectionLogWriter.flush();
   }
 }

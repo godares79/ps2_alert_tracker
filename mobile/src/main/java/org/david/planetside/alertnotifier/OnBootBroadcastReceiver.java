@@ -15,7 +15,7 @@ public class OnBootBroadcastReceiver extends BroadcastReceiver {
 
   @Override
   public void onReceive(Context context, Intent intent) {
-    Log.i(TAG, "Received an onBoot notification.");
+    Log.i(TAG, "Received an onBoot notification. Starting WebsocketClient.");
     Intent serviceStartIntent = new Intent(context, WebsocketClient.class);
     context.startService(serviceStartIntent);
   }

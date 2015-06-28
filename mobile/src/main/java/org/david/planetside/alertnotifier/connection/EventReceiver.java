@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URI;
 import java.nio.ByteBuffer;
 
@@ -32,7 +31,6 @@ public class EventReceiver extends Endpoint {
   private static final String TAG = EventReceiver.class.getSimpleName();
   private static final int RECONNECT_INTERVAL_MS = 120 * 1000;
   private final AlertNotifierApplication application;
-  private final PrintWriter connectionLogWriter;
   private final Handler uiThreadHandler;
   private MessageHandler.Whole<String> messageHandler = new MessageHandler.Whole<String>() {
     @Override
@@ -52,7 +50,6 @@ public class EventReceiver extends Endpoint {
         return;
       } catch (IOException e) {
         Log.e(TAG, "Error retrieving required data from server.", e);
-        writeToPersistentLog("Error retrieving required data from server.", e);
         return;
       }
 
@@ -83,25 +80,20 @@ public class EventReceiver extends Endpoint {
     }
   };
 
-  public EventReceiver(AlertNotifierApplication application,
-                       PrintWriter connectionLogWriter, Handler uiThreadHandler) {
+  public EventReceiver(AlertNotifierApplication application, Handler uiThreadHandler) {
     this.uiThreadHandler = uiThreadHandler;
     this.application = application;
-    this.connectionLogWriter = connectionLogWriter;
   }
 
   @Override
   public void onOpen(Session session, EndpointConfig config) {
     Log.d(TAG, "Connection opened!");
-    writeToPersistentLog("Connection opened!", null);
     session.addMessageHandler(messageHandler);
   }
 
   @Override
   public void onClose(Session session, CloseReason closeReason) {
     Log.i(TAG, "Connection closed! Reason: " + closeReason);
-    writeToPersistentLog("Connection closed. Reason: " + closeReason.getReasonPhrase()
-        + "(" + closeReason.getCloseCode() + ")", null);
 
     // Try reconnecting every 2 minutes.
     if (session != null) {
@@ -112,7 +104,6 @@ public class EventReceiver extends Endpoint {
   @Override
   public void onError(Session session, Throwable throwable) {
     Log.e(TAG, "Connection error!", throwable);
-    writeToPersistentLog("Connection error!", throwable);
 
     // Try reconnecting every 2 minutes.
     if (session != null) {
@@ -132,12 +123,9 @@ public class EventReceiver extends Endpoint {
         buffer.put((byte) 0xFF);
 
         Log.i(TAG, "Trying to reconnect. Is the session already open? " + session.isOpen());
-        writeToPersistentLog("Trying to reconnect after connection closed/error. " +
-            "Is the session open?" + session.isOpen(), null);
         while (!session.isOpen()) {
           try {
             Log.i(TAG, "Reconnecting...");
-            writeToPersistentLog("Reconnecting...", null);
 
             WebSocketContainer container = session.getContainer();
             container.connectToServer(
@@ -146,31 +134,14 @@ public class EventReceiver extends Endpoint {
             Thread.sleep(RECONNECT_INTERVAL_MS);
           } catch (InterruptedException e) {
             Log.e(TAG, "Interrupted while trying to reconnect.", e);
-            writeToPersistentLog("Interrupted while trying to reconnect.", e);
             break;
           } catch (DeploymentException | IOException e) {
             Log.e(TAG, "Exception while trying to reconnect.", e);
-            writeToPersistentLog("Exception while trying to reconnect.", e);
             break;
           }
         }
       }
     });
     reconnectThread.start();
-  }
-
-  private void writeToPersistentLog(String message, Throwable exception) {
-    if (connectionLogWriter == null) {
-      return;
-    }
-
-    if (message != null) {
-      connectionLogWriter.append(message).append("\n");
-    }
-    if (exception != null) {
-      connectionLogWriter.append(Log.getStackTraceString(exception)).append("\n");
-    }
-
-    connectionLogWriter.flush();
   }
 }

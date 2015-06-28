@@ -173,8 +173,7 @@ public class RESTClient {
     }
 
     try {
-      JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-      return jsonObject;
+      return new JSONObject(stringBuilder.toString());
     } catch (JSONException e) {
       Log.e(TAG, "Error parsing JSON from server for the query: " + query, e);
     } finally {
