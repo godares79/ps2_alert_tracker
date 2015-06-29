@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -20,19 +19,6 @@ import org.david.planetside.alertnotifier.AlertNotifierApplication;
 import org.david.planetside.alertnotifier.R;
 import org.david.planetside.alertnotifier.connection.WebsocketClient;
 import org.david.planetside.alertnotifier.controller.ServerAlertListAdapter;
-import org.david.planetside.alertnotifier.model.Continent;
-import org.david.planetside.alertnotifier.model.ContinentControl;
-import org.david.planetside.alertnotifier.model.Faction;
-import org.david.planetside.alertnotifier.model.FactionControl;
-import org.david.planetside.alertnotifier.model.FactionPopulation;
-import org.david.planetside.alertnotifier.model.Server;
-import org.david.planetside.alertnotifier.model.ServerAlert;
-import org.david.planetside.alertnotifier.model.ServerPopulation;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends Activity {
   public static final String SHARED_PREFS_FILE = "PS2_AlertNotifier_Prefs_File";
@@ -183,50 +169,6 @@ public class MainActivity extends Activity {
     int id = item.getItemId();
     if (id == R.id.server_settings) {
       startActivity(new Intent(this, SelectServerActivity.class));
-      return true;
-    } else if (id == R.id.test_inject_alert) {
-      ServerAlert fakeServerAlert = new ServerAlert();
-      long time = System.currentTimeMillis();
-      fakeServerAlert.setActive(true);
-      fakeServerAlert.setContinent(new Continent((int) time % 123456, "Continent " + time));
-      fakeServerAlert.setServer(new Server((int) time % 123456, "Server " + time));
-      fakeServerAlert.setInstanceId((int) time % 123456);
-      fakeServerAlert.setAlertStartTime(new Date());
-      fakeServerAlert.setExperienceBonus(30);
-
-      Faction vs = new Faction(1, "Vanu Sovereignty", BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.vs));
-      Faction nc = new Faction(2, "New Conglomerate", BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.nc));
-      Faction tr = new Faction(3, "Terran Republic", BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.tr));
-      List<FactionControl> factionControlList = new ArrayList<>();
-      factionControlList.add(new FactionControl(vs, 33));
-      factionControlList.add(new FactionControl(nc, 33));
-      factionControlList.add(new FactionControl(tr, 33));
-      fakeServerAlert.setContinentControl(new ContinentControl(factionControlList));
-
-      List<FactionPopulation> factionPopulationList = new ArrayList<>();
-      factionPopulationList.add(new FactionPopulation(vs, 33));
-      factionPopulationList.add(new FactionPopulation(nc, 33));
-      factionPopulationList.add(new FactionPopulation(tr, 33));
-      fakeServerAlert.setServerPopulation(new ServerPopulation(factionPopulationList));
-
-      AlertNotifierApplication alertNotifierApplication =
-          (AlertNotifierApplication) getApplication();
-      alertNotifierApplication.addServerAlert(fakeServerAlert);
-
-      LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
-      localBroadcastManager.sendBroadcast(new Intent("ALERT_DATA_UPDATED"));
-
-      return true;
-    } else if (id == R.id.test_remove_alert) {
-      AlertNotifierApplication alertNotifierApplication =
-          (AlertNotifierApplication) getApplication();
-      int alertsSize = alertNotifierApplication.getServerAlerts().size();
-      int randomAlertIndex = (new Random()).nextInt(alertsSize);
-      alertNotifierApplication.getServerAlerts().remove(randomAlertIndex);
-
-      LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
-      localBroadcastManager.sendBroadcast(new Intent("ALERT_DATA_UPDATED"));
-
       return true;
     } else {
       return super.onOptionsItemSelected(item);

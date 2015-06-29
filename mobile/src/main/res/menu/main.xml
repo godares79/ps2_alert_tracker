@@ -7,15 +7,4 @@
     android:orderInCategory="100"
     android:showAsAction="never"/>
 
-  <item
-    android:id="@+id/test_inject_alert"
-    android:title="Inject Fake Alert"
-    android:orderInCategory="200"
-    android:showAsAction="never"/>
-
-  <item
-    android:id="@+id/test_remove_alert"
-    android:title="Rem Rand Alert"
-    android:orderInCategory="300"
-    android:showAsAction="never"/>
 </menu>
