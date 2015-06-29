@@ -1,7 +1,9 @@
 package org.david.planetside.alertnotifier.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,6 +153,10 @@ public class ServerAlertListAdapter extends BaseAdapter {
         NotificationCreator notificationCreator = new NotificationCreator();
         notificationCreator.cancelNotification(context, serverAlert.getServer().getServerId());
         alertList.remove(serverAlert);
+
+        LocalBroadcastManager localBroadcastManager =
+            LocalBroadcastManager.getInstance(context.getApplicationContext());
+        localBroadcastManager.sendBroadcast(new Intent("ALERT_DATA_UPDATED"));
       }
     };
     countDownTimer.start();
