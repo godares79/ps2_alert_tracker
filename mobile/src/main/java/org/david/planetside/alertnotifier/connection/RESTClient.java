@@ -79,7 +79,7 @@ public class RESTClient {
       return ServerPopulation.parse(populationObject, factionList);
     } catch (JSONException e) {
       Log.e(TAG, "Error parsing JSON object for the query: " + POPULATION_INFO_QUERY, e);
-      return null;
+      return ServerPopulation.unknownPopulation();
     }
   }
 

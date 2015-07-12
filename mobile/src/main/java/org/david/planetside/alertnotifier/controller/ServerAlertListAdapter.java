@@ -99,14 +99,24 @@ public class ServerAlertListAdapter extends BaseAdapter {
         (ViewGroup) factionPopulationBlock.findViewById(R.id.alert_faction_population_data);
     // TODO: Get rid this removeAllViews and properly avoid reinflating if I don't need to
     factionPopulationView.removeAllViews();
-    for (FactionPopulation faction : serverPopulation.getFactionPopulationList()) {
-      View factionPairView = inflater.inflate(R.layout.faction_pair, factionPopulationView, false);
 
-      ImageView iconView = (ImageView) factionPairView.findViewById(R.id.icon);
+    List<FactionPopulation> factionPopulationList = serverPopulation.getFactionPopulationList();
+    if (factionPopulationList.size() == 0) {
+      // There was an error fetching the faction populations. Add a default N/A string.
+      View factionPairView = inflater.inflate(R.layout.faction_pair, factionPopulationView, false);
       TextView valueView = (TextView) factionPairView.findViewById(R.id.value);
-      iconView.setImageBitmap(faction.getFaction().getIcon());
-      valueView.setText(faction.getPopulation() + "%");
+      valueView.setText("NOT AVAILABLE");
       factionPopulationView.addView(factionPairView);
+    } else {
+      for (FactionPopulation faction : factionPopulationList) {
+        View factionPairView = inflater.inflate(R.layout.faction_pair, factionPopulationView, false);
+
+        ImageView iconView = (ImageView) factionPairView.findViewById(R.id.icon);
+        TextView valueView = (TextView) factionPairView.findViewById(R.id.value);
+        iconView.setImageBitmap(faction.getFaction().getIcon());
+        valueView.setText(faction.getPopulation() + "%");
+        factionPopulationView.addView(factionPairView);
+      }
     }
 
     // Start the countdown timer

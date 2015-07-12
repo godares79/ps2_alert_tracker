@@ -26,6 +26,10 @@ public class ServerPopulation {
     return new ServerPopulation(factionPopulationList);
   }
 
+  public static ServerPopulation unknownPopulation() {
+    return new ServerPopulation(new ArrayList<FactionPopulation>());
+  }
+
   @Override
   public String toString() {
     return getFactionPopulationList().toString();
