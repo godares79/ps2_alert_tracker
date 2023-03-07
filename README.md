@@ -1,4 +1,8 @@
 # ps2_alert_tracker
+
+| :exclamation:  Deprecated. I haven't played PS2 for some time.   |
+|------------------------------------------------------------------|
+
 Android app that receives notifications when a new alert has started in
 Planetside 2!
 
@@ -12,3 +16,4 @@ alert is active).
 
 Right now, this is only a mobile app. But I would like to eventually add a
 wearable microapp.
+
